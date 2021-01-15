@@ -6,7 +6,7 @@ namespace lunasvg {
 
 struct Bitmap::Impl
 {
-    Impl(std::uint8_t* data, std::uint32_t width, std::uint32_t height, std::uint32_t stride);
+    Impl(std::uint8_t* data, std::uint32_t width, std::uint32_t height, std::uint32_t stride, ColorFormat colorFormat = ColorFormat::BGRA);
     Impl(std::uint32_t width, std::uint32_t height);
 
     std::unique_ptr<std::uint8_t[]> ownData;
@@ -14,10 +14,11 @@ struct Bitmap::Impl
     std::uint32_t width;
     std::uint32_t height;
     std::uint32_t stride;
+	ColorFormat color_format = ColorFormat::BGRA;
 };
 
-Bitmap::Impl::Impl(std::uint8_t* data, std::uint32_t width, std::uint32_t height, std::uint32_t stride)
-    : data(data), width(width), height(height), stride(stride)
+Bitmap::Impl::Impl(std::uint8_t* data, std::uint32_t width, std::uint32_t height, std::uint32_t stride, ColorFormat colorFormat)
+    : data(data), width(width), height(height), stride(stride), color_format(colorFormat)
 {
 }
 
@@ -30,8 +31,8 @@ Bitmap::Bitmap()
 {
 }
 
-Bitmap::Bitmap(std::uint8_t* data, std::uint32_t width, std::uint32_t height, std::uint32_t stride)
-    : m_impl(new Impl(data, width, height, stride))
+Bitmap::Bitmap(std::uint8_t* data, std::uint32_t width, std::uint32_t height, std::uint32_t stride, ColorFormat colorFormat)
+    : m_impl(new Impl(data, width, height, stride, colorFormat))
 {
 }
 
@@ -68,6 +69,10 @@ std::uint32_t Bitmap::height() const
 std::uint32_t Bitmap::stride() const
 {
     return m_impl ? m_impl->stride : 0;
+}
+
+ColorFormat Bitmap::colorFormat() const {
+    return m_impl ? m_impl->color_format : ColorFormat::BGRA;
 }
 
 SVGElement::SVGElement(SVGDocument* document)

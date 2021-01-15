@@ -5,6 +5,11 @@
 #include <memory>
 
 namespace lunasvg {
+    
+enum class ColorFormat {
+	BGRA,
+	RGBA
+};
 
 class Bitmap
 {
@@ -13,7 +18,7 @@ public:
      * @note Default bitmap format is RGBA (non-premultiplied).
      */
     Bitmap();
-    Bitmap(std::uint8_t* data, std::uint32_t width, std::uint32_t height, std::uint32_t stride);
+    Bitmap(std::uint8_t* data, std::uint32_t width, std::uint32_t height, std::uint32_t stride, ColorFormat colorFormat = ColorFormat::BGRA);
     Bitmap(std::uint32_t width, std::uint32_t height);
 
     void reset(std::uint8_t* data, std::uint32_t width, std::uint32_t height, std::uint32_t stride);
@@ -23,6 +28,7 @@ public:
     std::uint32_t width() const;
     std::uint32_t height() const;
     std::uint32_t stride() const;
+	ColorFormat colorFormat() const;
 
 private:
     struct Impl;

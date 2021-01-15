@@ -14,7 +14,7 @@ void SVGGraphicsElement::render(RenderContext& context) const
     SVGStyledElement::render(context);
     RenderState& state = context.state();
     if(m_transform.isSpecified())
-        state.matrix.multiply(m_transform.property()->value());
+        state.matrix.rightMultiply(m_transform.property()->value());
 }
 
 } // namespace lunasvg

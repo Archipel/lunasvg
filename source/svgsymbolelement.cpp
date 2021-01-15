@@ -24,7 +24,7 @@ void SVGSymbolElement::render(RenderContext& context) const
     RenderState& newState = context.state();
     if(viewBox().isSpecified() && viewBox().property()->isValid())
     {
-        newState.matrix.multiply(calculateViewBoxTransform(viewPort, viewBox().property()->value()));
+        newState.matrix.leftMultiply(calculateViewBoxTransform(viewPort, viewBox().property()->value()));
         newState.viewPort = viewBox().property()->value();
     }
     else

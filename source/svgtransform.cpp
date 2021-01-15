@@ -95,7 +95,7 @@ void SVGTransform::setValueAsString(const std::string& value)
         switch(type)
         {
         case TransformTypeMatrix:
-            m_value.multiply(AffineTransform(values[0], values[1], values[2], values[3], values[4], values[5]));
+            m_value.leftMultiply(AffineTransform(values[0], values[1], values[2], values[3], values[4], values[5]));
             break;
         case TransformTypeRotate:
             if(count == 1)

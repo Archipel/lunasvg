@@ -21,6 +21,11 @@ AffineTransform::AffineTransform(const AffineTransform& transform)
    m_matrix[4] = m[4]; m_matrix[5] = m[5];
 }
 
+/**
+ * [ m00 m01 m02 ]    [ 0   2   4 ]
+ * [ m10 m11 m12 ] => [ 1   3   5 ]
+ * [ 0   0   1   ]    [ /   /   / ]
+ */
 AffineTransform::AffineTransform(double m00, double m10, double m01, double m11, double m02, double m12)
 {
     m_matrix[0] = m00; m_matrix[1] = m10;
@@ -69,38 +74,44 @@ AffineTransform AffineTransform::inverted() const
                            m02, m12);
 }
 
-AffineTransform AffineTransform::operator*(const AffineTransform& transform) const
+/**
+ * [ m00 m01 m02 ]    [ 0   2   4 ]
+ * [ m10 m11 m12 ] => [ 1   3   5 ]
+ * [ 0   0   1   ]    [ /   /   / ]
+ */
+	
+AffineTransform AffineTransform::operator*(const AffineTransform& previousTransform) const
 {
-    const double* a = m_matrix;
-    const double* b = transform.m_matrix;
+    const double* B = m_matrix;
+    const double* A = previousTransform.m_matrix;
 
-    double m00 = a[0] * b[0] + a[1] * b[2];
-    double m10 = a[0] * b[1] + a[1] * b[3];
-    double m01 = a[2] * b[0] + a[3] * b[2];
-    double m11 = a[2] * b[1] + a[3] * b[3];
-    double m02 = a[4] * b[0] + a[5] * b[2] + b[4];
-    double m12 = a[4] * b[1] + a[5] * b[3] + b[5];
+    double m00 = B[0] * A[0] + B[2] * A[1];
+    double m10 = B[1] * A[0] + B[3] * A[1];
+    double m01 = B[0] * A[2] + B[2] * A[3];
+    double m11 = B[1] * A[2] + B[3] * A[3];
+    double m02 = B[0] * A[4] + B[2] * A[5] + B[4];
+    double m12 = B[1] * A[4] + B[3] * A[5] + B[5];
 
+	
     return AffineTransform(m00, m10,
                            m01, m11,
                            m02, m12);
 }
 
-AffineTransform& AffineTransform::operator*=(const AffineTransform& transform)
+AffineTransform& AffineTransform::operator*=(const AffineTransform& nextTransform)
 {
-    *this = *this * transform;
+    return leftMultiply(nextTransform);
+}
+
+AffineTransform& AffineTransform::leftMultiply(const AffineTransform& nextTransform)
+{
+    *this = nextTransform * *this;
     return *this;
 }
 
-AffineTransform& AffineTransform::multiply(const AffineTransform& transform)
+AffineTransform& AffineTransform::rightMultiply(const AffineTransform& previousTransform)
 {
-    *this = transform * *this;
-    return *this;
-}
-
-AffineTransform& AffineTransform::postmultiply(const AffineTransform& transform)
-{
-    *this = *this * transform;
+    *this = *this * previousTransform;
     return *this;
 }
 
@@ -153,27 +164,27 @@ AffineTransform AffineTransform::fromTranslate(double tx, double ty)
 
 AffineTransform& AffineTransform::rotate(double radians)
 {
-    return multiply(fromRotate(radians));
+    return leftMultiply(fromRotate(radians));
 }
 
 AffineTransform& AffineTransform::rotate(double radians, double cx, double cy)
 {
-    return multiply(fromRotate(radians, cx, cy));
+    return leftMultiply(fromRotate(radians, cx, cy));
 }
 
 AffineTransform& AffineTransform::scale(double sx, double sy)
 {
-    return multiply(fromScale(sx, sy));
+    return leftMultiply(fromScale(sx, sy));
 }
 
 AffineTransform& AffineTransform::shear(double shx, double shy)
 {
-    return multiply(fromShear(shx, shy));
+    return leftMultiply(fromShear(shx, shy));
 }
 
 AffineTransform& AffineTransform::translate(double cx, double cy)
 {
-    return multiply(fromTranslate(cx, cy));
+    return leftMultiply(fromTranslate(cx, cy));
 }
 
 void AffineTransform::map(double x, double y, double& _x, double& _y) const

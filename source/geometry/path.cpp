@@ -181,10 +181,10 @@ void Path::arcTo(double rx, double ry, double xAxisRotation, bool largeArcFlag, 
         coords[pos++] = dy;
     }
 
-    AffineTransform m;
-    m *= AffineTransform::fromScale(rx, ry);
-    m *= AffineTransform::fromRotate(xAxisRotation * PI / 180.0);
-    m *= AffineTransform::fromTranslate(cx, cy);
+    AffineTransform m =
+        AffineTransform::fromTranslate(cx, cy) *
+        AffineTransform::fromRotate(xAxisRotation * PI / 180.0) * 
+        AffineTransform::fromScale(rx, ry);
     m.map(coords.get(), coords.get(), int(pos));
 
     coords[pos - 2] = x;

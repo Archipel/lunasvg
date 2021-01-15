@@ -349,7 +349,7 @@ void RenderContext::push()
 void RenderContext::pop()
 {
     RenderState* newState = m_states.top();
-    Rect bbox = newState->matrix.inverted().multiply(m_state->matrix).mapRect(m_state->bbox);
+    Rect bbox = newState->matrix.inverted().leftMultiply(m_state->matrix).mapRect(m_state->bbox);
 
     double l = std::min(newState->bbox.x, bbox.x);
     double t = std::min(newState->bbox.y, bbox.y);

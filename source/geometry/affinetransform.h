@@ -11,17 +11,29 @@ class AffineTransform
 public:
     AffineTransform();
     AffineTransform(const AffineTransform& transform);
+	
+	/**
+	 * [ m00 m01 m02 ]
+	 * [ m10 m11 m12 ]
+	 * [ 0   0   1   ]
+	 */
     AffineTransform(double m00, double m10, double m01, double m11, double m02, double m12);
-
+    
+	/**
+	 * [ m00 m01 m02 ]
+	 * [ m10 m11 m12 ]
+	 * [ 0   0   1   ]
+	 */
     void setMatrix(double m00, double m10, double m01, double m11, double m02, double m12);
+	
     void makeIdentity();
     AffineTransform inverted() const;
 
-    AffineTransform operator*(const AffineTransform& transform) const;
-    AffineTransform& operator*=(const AffineTransform& transform);
+    AffineTransform operator*(const AffineTransform& previousTransform) const;
+    AffineTransform& operator*=(const AffineTransform& nextTransform);
 
-    AffineTransform& multiply(const AffineTransform& transform);
-    AffineTransform& postmultiply(const AffineTransform& transform);
+    AffineTransform& leftMultiply(const AffineTransform& nextTransform);
+    AffineTransform& rightMultiply(const AffineTransform& previousTransform);
     AffineTransform& rotate(double radians);
     AffineTransform& rotate(double radians, double cx, double cy);
     AffineTransform& scale(double sx, double sy);

@@ -66,7 +66,7 @@ void SVGMarkerElement::renderMarker(RenderState& state, const Point& origin, dou
         AffineTransform viewTransform = calculateViewBoxTransform(Rect(0, 0, w, h), viewBox().property()->value());
         viewTransform.map(refX, refY, refX, refY);
         newState.matrix.translate(-refX, -refY);
-        newState.matrix.multiply(viewTransform);
+        newState.matrix.leftMultiply(viewTransform);
         newState.viewPort = viewBox().property()->value();
     }
     else

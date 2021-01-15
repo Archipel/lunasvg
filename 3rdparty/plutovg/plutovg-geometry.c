@@ -70,16 +70,16 @@ void plutovg_matrix_rotate(plutovg_matrix_t* matrix, double radians, double x, d
     plutovg_matrix_multiply(matrix, &m, matrix);
 }
 
-void plutovg_matrix_multiply(plutovg_matrix_t* matrix, const plutovg_matrix_t* a, const plutovg_matrix_t* b)
+void plutovg_matrix_multiply(plutovg_matrix_t* C, const plutovg_matrix_t* B, const plutovg_matrix_t* A)
 {
-    double m00 = a->m00 * b->m00 + a->m10 * b->m01;
-    double m10 = a->m00 * b->m10 + a->m10 * b->m11;
-    double m01 = a->m01 * b->m00 + a->m11 * b->m01;
-    double m11 = a->m01 * b->m10 + a->m11 * b->m11;
-    double m02 = a->m02 * b->m00 + a->m12 * b->m01 + b->m02;
-    double m12 = a->m02 * b->m10 + a->m12 * b->m11 + b->m12;
+    double m00 = B->m00 * A->m00 + B->m01 * A->m10;
+    double m10 = B->m10 * A->m00 + B->m11 * A->m10;
+    double m01 = B->m00 * A->m01 + B->m01 * A->m11;
+    double m11 = B->m10 * A->m01 + B->m11 * A->m11;
+    double m02 = B->m00 * A->m02 + B->m01 * A->m12 + B->m02;
+    double m12 = B->m10 * A->m02 + B->m11 * A->m12 + B->m12;
 
-    plutovg_matrix_init(matrix, m00, m10, m01, m11, m02, m12);
+    plutovg_matrix_init(C, m00, m10, m01, m11, m02, m12);
 }
 
 int plutovg_matrix_invert(plutovg_matrix_t* matrix)

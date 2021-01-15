@@ -45,7 +45,7 @@ void SVGSVGElement::render(RenderContext& context) const
     RenderState& newState = context.state();
     if(viewBox().isSpecified() && viewBox().property()->isValid())
     {
-        newState.matrix.multiply(calculateViewBoxTransform(viewPort, viewBox().property()->value()));
+        newState.matrix.leftMultiply(calculateViewBoxTransform(viewPort, viewBox().property()->value()));
         newState.viewPort = viewBox().property()->value();
     }
     else
@@ -81,7 +81,7 @@ void SVGRootElement::renderToBitmap(Bitmap& bitmap, const Rect& viewBox, double 
 
     SVGGraphicsElement::render(context);
     RenderState& newState = context.state();
-    newState.matrix.multiply(calculateViewBoxTransform(state.viewPort, viewBox));
+    newState.matrix.leftMultiply(calculateViewBoxTransform(state.viewPort, viewBox));
     newState.viewPort = viewBox;
 
     context.render(next, tail);

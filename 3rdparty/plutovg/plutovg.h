@@ -45,7 +45,19 @@ void plutovg_matrix_translate(plutovg_matrix_t* matrix, double x, double y);
 void plutovg_matrix_scale(plutovg_matrix_t* matrix, double x, double y);
 void plutovg_matrix_shear(plutovg_matrix_t* matrix, double x, double y);
 void plutovg_matrix_rotate(plutovg_matrix_t* matrix, double radians, double x, double y);
-void plutovg_matrix_multiply(plutovg_matrix_t* matrix, const plutovg_matrix_t* a, const plutovg_matrix_t* b);
+
+/**
+ * perform the matrix multipliction C = B.A
+ * with B and A 2d transformation matrixes of the form
+ *
+ * [ m00 m01 m02 ]
+ * [ m10 m11 m12 ]
+ * [   0   0   1 ]
+ *
+ * B represents the transformation that is applied after A
+ */
+void plutovg_matrix_multiply(plutovg_matrix_t* C, const plutovg_matrix_t* B, const plutovg_matrix_t* A);
+	
 int plutovg_matrix_invert(plutovg_matrix_t* matrix);
 void plutovg_matrix_map(const plutovg_matrix_t* matrix, double x, double y, double* _x, double* _y);
 void plutovg_matrix_map_point(const plutovg_matrix_t* matrix, const plutovg_point_t* src, plutovg_point_t* dst);

@@ -147,7 +147,7 @@ Paint SVGLinearGradientElement::getPaint(const RenderState& state) const
     }
 
     if(attributes.gradientTransform)
-        matrix.multiply(attributes.gradientTransform->value());
+        matrix.leftMultiply(attributes.gradientTransform->value());
 
     LinearGradient values(x1, y1, x2, y2);
     Gradient gradient(values);
@@ -257,7 +257,7 @@ Paint SVGRadialGradientElement::getPaint(const RenderState& state) const
     }
 
     if(attributes.gradientTransform)
-        matrix.multiply(attributes.gradientTransform->value());
+        matrix.leftMultiply(attributes.gradientTransform->value());
 
     RadialGradient values(cx, cy, r, fx, fy);
     Gradient gradient(values);
@@ -359,7 +359,7 @@ Paint SVGPatternElement::getPaint(const RenderState& state) const
 
     AffineTransform transform(state.matrix);
     if(attributes.patternTransform)
-        transform.multiply(attributes.patternTransform->value());
+        transform.leftMultiply(attributes.patternTransform->value());
 
     const double* m = transform.getMatrix();
     double scalex = std::sqrt(m[0] * m[0] + m[2] * m[2]);
@@ -384,7 +384,7 @@ Paint SVGPatternElement::getPaint(const RenderState& state) const
     if(attributes.viewBox)
     {
         const SVGPreserveAspectRatio* positioning = attributes.preserveAspectRatio ? attributes.preserveAspectRatio : SVGPreserveAspectRatio::defaultValue();
-        newState.matrix.multiply(positioning->getMatrix(Rect(0, 0, w, h), attributes.viewBox->value()));
+        newState.matrix.leftMultiply(positioning->getMatrix(Rect(0, 0, w, h), attributes.viewBox->value()));
         newState.viewPort = attributes.viewBox->value();
     }
     else if(attributes.patternContentUnits && attributes.patternContentUnits->enumValue() == UnitTypeObjectBoundingBox)
@@ -399,7 +399,7 @@ Paint SVGPatternElement::getPaint(const RenderState& state) const
 
     AffineTransform matrix(1.0/scalex, 0, 0, 1.0/scaley, x, y);
     if(attributes.patternTransform)
-        matrix.postmultiply(attributes.patternTransform->value());
+        matrix.rightMultiply(attributes.patternTransform->value());
 
     Texture texture;
     texture.type = TextureTypeTiled;

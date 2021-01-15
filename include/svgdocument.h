@@ -1,6 +1,8 @@
 #ifndef SVGDOCUMENT_H
 #define SVGDOCUMENT_H
 
+#include <affinetransform.h>
+
 #include "svgelement.h"
 
 namespace lunasvg {
@@ -126,7 +128,7 @@ public:
      * @param dpi Dots per inch to use for units conversion to pixels.
      * @param bgColor The background color in 0xRRGGBBAA.
      */
-    void render(Bitmap& bitmap, double dpi = 96.0, std::uint32_t bgColor = 0x00000000) const;
+    void render(Bitmap& bitmap, double dpi = 96.0, std::uint32_t bgColor = 0x00000000, const AffineTransform& transform = AffineTransform()) const;
 
     /**
      * @brief This is the top level element.

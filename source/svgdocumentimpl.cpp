@@ -135,7 +135,7 @@ Bitmap SVGDocumentImpl::renderToBitmap(std::uint32_t width, std::uint32_t height
     return bitmap;
 }
 
-void SVGDocumentImpl::render(Bitmap& bitmap, double dpi, std::uint32_t bgColor) const
+void SVGDocumentImpl::render(Bitmap& bitmap, double dpi, std::uint32_t bgColor, const AffineTransform& transform) const
 {
     RenderContext context(m_rootElement, RenderModeDisplay);
     RenderState& state = context.state();
@@ -144,6 +144,7 @@ void SVGDocumentImpl::render(Bitmap& bitmap, double dpi, std::uint32_t bgColor) 
     state.canvas.clear(bgColor);
     state.viewPort = Rect(0, 0, bitmap.width(), bitmap.height());
     state.dpi = dpi;
+	state.matrix = transform;
     context.render(m_rootElement, m_rootElement->tail);
     state.canvas.convertToRGBA();
 }

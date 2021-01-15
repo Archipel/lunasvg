@@ -79,9 +79,9 @@ Bitmap SVGDocument::renderToBitmap(std::uint32_t width, std::uint32_t height, do
     return m_impl->renderToBitmap(width, height, dpi, bgColor);
 }
 
-void SVGDocument::render(Bitmap& bitmap, double dpi, std::uint32_t bgColor) const
+void SVGDocument::render(Bitmap& bitmap, double dpi, std::uint32_t bgColor, const AffineTransform& transform) const
 {
-    m_impl->render(bitmap, dpi, bgColor);
+    m_impl->render(bitmap, dpi, bgColor, transform);
 }
 
 SVGElement* SVGDocument::rootElement() const

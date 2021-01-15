@@ -1,6 +1,8 @@
 #ifndef SVGDOCUMENTIMPL_H
 #define SVGDOCUMENTIMPL_H
 
+#include <affinetransform.h>
+
 #include "svgdocument.h"
 
 #include <map>
@@ -26,7 +28,7 @@ public:
     double documentHeight(double dpi) const;
     Box getBBox(double dpi) const;
     Bitmap renderToBitmap(std::uint32_t width, std::uint32_t height, double dpi, std::uint32_t bgColor) const;
-    void render(Bitmap& bitmap, double dpi, std::uint32_t bgColor) const;
+    void render(Bitmap& bitmap, double dpi, std::uint32_t bgColor, const AffineTransform& transform = AffineTransform()) const;
     void updateIdCache(const std::string& oldValue, const std::string& newValue, SVGElementImpl* element);
     SVGElementImpl* resolveIRI(const std::string& href) const;
     SVGElementImpl* insertContent(const std::string& content, SVGElementImpl* target, InsertPosition position);

@@ -49,7 +49,7 @@ bool SVGDocument::loadFromFile(const std::string& filename)
     return m_impl->loadFromFile(filename);
 }
 
-bool SVGDocument::loadFromData(const std::string& content)
+bool SVGDocument::loadFromData(const char* content)
 {
     return m_impl->loadFromData(content);
 }
@@ -79,7 +79,7 @@ Bitmap SVGDocument::renderToBitmap(std::uint32_t width, std::uint32_t height, do
     return m_impl->renderToBitmap(width, height, dpi, bgColor);
 }
 
-void SVGDocument::render(Bitmap bitmap, double dpi, std::uint32_t bgColor) const
+void SVGDocument::render(Bitmap& bitmap, double dpi, std::uint32_t bgColor) const
 {
     m_impl->render(bitmap, dpi, bgColor);
 }

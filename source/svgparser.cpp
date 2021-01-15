@@ -13,8 +13,8 @@
 #define KTagDocType 8
 
 namespace lunasvg {
-
-SVGElementImpl* SVGParser::parse(const std::string& source, SVGDocument* document, SVGElementHead* parent)
+	
+SVGElementImpl* SVGParser::parse(const char* ptr, SVGDocument* document, SVGElementHead* parent)
 {
     SVGElementImpl* start = new SVGElementText(document, KEmptyString);
     start->parent = parent;
@@ -22,7 +22,6 @@ SVGElementImpl* SVGParser::parse(const std::string& source, SVGDocument* documen
 
     std::stack<SVGElementHead*> blocks;
     std::stack<std::string> unsupported;
-    const char* ptr = source.c_str();
     int tagType;
     std::string tagName, content;
     AttributeList attributes;

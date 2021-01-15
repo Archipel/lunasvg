@@ -76,7 +76,10 @@ public:
      * @param content A string containing a SVG content.
      * @return True on success, otherwise false.
      */
-    bool loadFromData(const std::string& content);
+    bool loadFromData(const char* content);
+    bool loadFromData(const std::string& content) {
+	    return loadFromData(content.c_str());
+    }
 
     /**
      * @brief Loads font from a file.
@@ -123,7 +126,7 @@ public:
      * @param dpi Dots per inch to use for units conversion to pixels.
      * @param bgColor The background color in 0xRRGGBBAA.
      */
-    void render(Bitmap bitmap, double dpi = 96.0, std::uint32_t bgColor = 0x00000000) const;
+    void render(Bitmap& bitmap, double dpi = 96.0, std::uint32_t bgColor = 0x00000000) const;
 
     /**
      * @brief This is the top level element.

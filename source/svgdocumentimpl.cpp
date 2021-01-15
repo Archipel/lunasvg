@@ -39,7 +39,7 @@ bool SVGDocumentImpl::loadFromFile(const std::string& filename)
     return loadFromData(content);
 }
 
-bool SVGDocumentImpl::loadFromData(const std::string& content)
+bool SVGDocumentImpl::loadFromData(const char* content)
 {
     m_rootElement->clearContent();
     SVGElementImpl* head = SVGParser::parse(content, m_rootElement->document(), nullptr);

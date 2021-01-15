@@ -17,7 +17,10 @@ class SVGElementHead;
 class SVGParser
 {
 public:
-    static SVGElementImpl* parse(const std::string& source, SVGDocument* document, SVGElementHead* parent);
+    static SVGElementImpl* parse(const char* ptr, SVGDocument* document, SVGElementHead* parent);
+    static SVGElementImpl* parse(const std::string& source, SVGDocument* document, SVGElementHead* parent) {
+		return parse(source.c_str(), document, parent);
+    }
 
 private:
     typedef std::pair<std::string, std::string> Attribute;

@@ -17,7 +17,10 @@ public:
     SVGDocumentImpl(SVGDocument* document);
     ~SVGDocumentImpl();
     bool loadFromFile(const std::string& filename);
-    bool loadFromData(const std::string& content);
+    bool loadFromData(const char* content);
+    bool loadFromData(const std::string& content) {
+	    return loadFromData(content.c_str());
+    }
     bool loadFontFromFile(const std::string& filename);
     double documentWidth(double dpi) const;
     double documentHeight(double dpi) const;

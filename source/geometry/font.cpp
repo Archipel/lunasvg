@@ -63,9 +63,10 @@ bool FontImpl::init(const std::string& filename)
         return false;
 
     fs.seekg(0, std::ios::end);
-    std::streamoff size = fs.tellg();
+    const auto size = fs.tellg();
+    assert(size <= SIZE_MAX);
     fs.seekg(0, std::ios::beg);
-    m_data.reset(new std::uint8_t[size]);
+    m_data.reset(new std::uint8_t[size_t(size)]);
     fs.read(reinterpret_cast<char*>(m_data.get()), size);
     fs.close();
 

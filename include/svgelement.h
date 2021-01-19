@@ -28,7 +28,8 @@ public:
     std::uint32_t width() const;
     std::uint32_t height() const;
     std::uint32_t stride() const;
-	ColorFormat colorFormat() const;
+    ColorFormat colorFormat() const;
+    bool valid() const;
 
 private:
     struct Impl;

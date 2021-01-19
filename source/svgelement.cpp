@@ -14,7 +14,7 @@ struct Bitmap::Impl
     std::uint32_t width;
     std::uint32_t height;
     std::uint32_t stride;
-	ColorFormat color_format = ColorFormat::BGRA;
+    ColorFormat color_format = ColorFormat::BGRA;
 };
 
 Bitmap::Impl::Impl(std::uint8_t* data, std::uint32_t width, std::uint32_t height, std::uint32_t stride, ColorFormat colorFormat)
@@ -73,6 +73,11 @@ std::uint32_t Bitmap::stride() const
 
 ColorFormat Bitmap::colorFormat() const {
     return m_impl ? m_impl->color_format : ColorFormat::BGRA;
+}
+
+bool Bitmap::valid() const
+{
+    return !!m_impl;
 }
 
 SVGElement::SVGElement(SVGDocument* document)

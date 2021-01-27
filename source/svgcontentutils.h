@@ -25,6 +25,7 @@ enum DOMElementID
     DOMElementIdRect,
     DOMElementIdSolidColor,
     DOMElementIdStop,
+    DOMElementIdStyle,
     DOMElementIdSvg,
     DOMElementIdSymbol,
     DOMElementIdText,
@@ -35,6 +36,7 @@ enum DOMElementID
 enum DOMPropertyID
 {
     DOMPropertyIdUnknown = 0,
+    DOMPropertyIdClass,
     DOMPropertyIdClipPathUnits,
     DOMPropertyIdCx,
     DOMPropertyIdCy,

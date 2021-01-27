@@ -1,6 +1,7 @@
 #include "svgparser.h"
 #include "svgdocumentimpl.h"
 #include "svgelementimpl.h"
+#include "svgstyleelement.h"
 
 #define KTagUnknown 0
 #define KTagOpen 1
@@ -107,11 +108,17 @@ SVGElementImpl* SVGParser::parse(const char* ptr, SVGDocument* document, SVGElem
         }
         else if(tagType==KTagPCData && !blocks.empty())
         {
-            SVGElementText* element = new SVGElementText(document, content);
-            element->parent = blocks.top();
-            element->prev = current;
-            current->next = element;
-            current = element;
+        	SVGStyleElement* curstyleele = dynamic_cast<SVGStyleElement*>(current);
+        	if(curstyleele) {
+        		curstyleele->setContent(content);
+        	}
+            else {
+	            SVGElementText* element = new SVGElementText(document, content);
+	            element->parent = blocks.top();
+	            element->prev = current;
+	            current->next = element;
+	            current = element;
+            }
         }
     }
 

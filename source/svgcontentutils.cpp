@@ -11,6 +11,7 @@
 #include "svgmarkerelement.h"
 #include "svggeometryelement.h"
 #include "svgtextelement.h"
+#include "svgstyleelement.h"
 
 #include <map>
 
@@ -47,6 +48,7 @@ static const DOMElementID contentmodel_1[] = {
     DOMElementIdMask,
     DOMElementIdPattern,
     DOMElementIdSolidColor,
+    DOMElementIdStyle,
     DOMElementIdText,
     DOMElementIdUnknown
 };
@@ -116,8 +118,9 @@ static const std::map<std::string, DOMElementID> domelementmap = {
     {"polyline", DOMElementIdPolyline},
     {"radialGradient", DOMElementIdRadialGradient},
     {"rect", DOMElementIdRect},
-    {"stop", DOMElementIdStop},
     {"solidColor", DOMElementIdSolidColor},
+    {"stop", DOMElementIdStop},
+    {"style", DOMElementIdStyle},
     {"svg", DOMElementIdSvg},
     {"symbol", DOMElementIdSymbol},
     {"text", DOMElementIdText},
@@ -126,6 +129,7 @@ static const std::map<std::string, DOMElementID> domelementmap = {
 
 static const std::map<std::string, DOMPropertyID> dompropertymap = {
     {"clipPathUnits", DOMPropertyIdClipPathUnits},
+    {"class", DOMPropertyIdClass},
     {"cx", DOMPropertyIdCx},
     {"cy", DOMPropertyIdCy},
     {"d", DOMPropertyIdD},
@@ -254,6 +258,8 @@ SVGElementHead* createElement(DOMElementID elementId, SVGDocument* document)
         return new SVGMarkerElement(document);
     case DOMElementIdText:
         return new SVGTextElement(document);
+    case DOMElementIdStyle:
+        return new SVGStyleElement(document);
     default:
         break;
     }
